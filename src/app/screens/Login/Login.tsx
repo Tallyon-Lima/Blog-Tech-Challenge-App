@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -5,6 +6,7 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "reac
 export default function Login() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   return (
     <View style={styles.content}>
@@ -17,6 +19,11 @@ export default function Login() {
 
             <View style={styles.overlay} />
         
+            <Image 
+                source={require('../../../../assets/images/logo.png')}
+                style={styles.iconeHeader}
+                resizeMode="cover"
+            />
             <Text style={styles.textoHeader}>Blog Tech Mobile</Text>
         </View>
 
@@ -30,11 +37,18 @@ export default function Login() {
         />
 
         <Text style={styles.label}>Senha</Text>
-        <TextInput style={styles.input}
-          onChangeText={(inputText)=>setPassword(inputText)}
-          value={password}
-          placeholder="Insira sua senha"
-        />
+        <View style={styles.containerSenha}>
+            <TextInput 
+                style={styles.inputSenha}
+                onChangeText={(inputText)=>setPassword(inputText)}
+                value={password}
+                placeholder="Insira sua senha"
+                secureTextEntry={!mostrarSenha}
+            />
+            <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
+                <Ionicons name={mostrarSenha ? 'eye-off' : 'eye'} size={24} color="#555"/>
+            </TouchableOpacity>
+        </View>
 
         <StatusBar style="auto" />
         <TouchableOpacity style={styles.button} onPress={(e) => (e)}>
@@ -71,6 +85,16 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 
+    iconeHeader: {
+        marginTop: 140,
+        marginLeft: 45,
+        ...StyleSheet.absoluteFill,
+        width: '15%',
+        height: '20%',
+        backgroundColor: 'rgba(246, 246, 246, 0.75)',
+        borderRadius: 10
+    },
+
     overlay: {
         ...StyleSheet.absoluteFill,
         backgroundColor: 'rgba(0, 80, 180, 0.75)',
@@ -97,6 +121,17 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
 
+    containerSenha: {
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 15,
+        paddingHorizontal: 10,
+        marginBottom: 10
+    },
+
     input: {
         height: 40,
         borderColor: 'gray',
@@ -105,7 +140,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         width: '90%',
         borderRadius: 15,
-        paddingLeft: 15
+        paddingLeft: 15,
+        flex: 1
+    },
+
+    inputSenha: {
+        paddingLeft: 6,
+        flex: 1
     },
 
     button: {
