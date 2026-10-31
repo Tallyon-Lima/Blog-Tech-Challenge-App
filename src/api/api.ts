@@ -1,10 +1,12 @@
-const API_URL = process.env.EXPO_API_URL;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export async function api(
     endpoint: string,
     options?: RequestInit
 ) {
-    const token = sessionStorage.getItem("token");
+    const token = await AsyncStorage.getItem("token");
 
     const response = await fetch(`${API_URL}${endpoint}`, {
         ...options,
