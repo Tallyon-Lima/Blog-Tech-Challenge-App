@@ -1,4 +1,4 @@
-
+import AppHeader from "@/components/AppHeader/AppHeader";
 import UsuarioModal, { NovoUsuario } from "@/components/UsuarioModal/UsuarioModal";
 import {
     COR_PAPEL_PADRAO,
@@ -8,20 +8,18 @@ import {
     type FiltroPapel,
 } from "@/constants/Papeis";
 import type { Usuario } from "@/types/usuarios";
+import { mostrarErro } from "@/utils/toast";
 import { Ionicons } from "@expo/vector-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
     ActivityIndicator,
     Alert,
     FlatList,
-    Image,
     Text,
     TextInput,
-    ToastAndroid,
     TouchableOpacity,
     View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
     atualizarUsuarioController,
     criarUsuarioController,
@@ -49,13 +47,6 @@ export default function ManagerUsers() {
 
     const paginaAtual = useRef(1);
     const idRequisicao = useRef(0);
-
-    const mostrarErro = (error: unknown, mensagem: string) => {
-        ToastAndroid.show(
-            error instanceof Error ? error.message : mensagem,
-            ToastAndroid.SHORT
-        );
-    };
 
     useEffect(() => {
         const timer = setTimeout(() => setBuscaAplicada(busca), 400);
@@ -96,8 +87,7 @@ export default function ManagerUsers() {
             }
         }
     }, [buscaAplicada, filtroPapel]);
-
-    // Reinicia a listagem quando a busca ou o filtro mudam
+    
     useEffect(() => {
         setCarregando(true);
         buscarPagina(1);
@@ -232,7 +222,7 @@ export default function ManagerUsers() {
     );
 
     return (
-        <SafeAreaView style={styles.tela} edges={["top"]}>
+        <View style={styles.tela}>
             <UsuarioModal
                 visible={modalAberto}
                 onClose={() => setModalAberto(false)}
@@ -240,19 +230,7 @@ export default function ManagerUsers() {
                 onSubmit={handleSalvar}
             />
 
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.botaoMenu}>
-                    <Ionicons name="menu" size={22} color="#fff" />
-                </TouchableOpacity>
-
-                <Image
-                    source={require("../../../assets/images/logo.png")}
-                    style={styles.logo}
-                    resizeMode="contain"
-                />
-
-                <Text style={styles.headerTitulo}>BlogTech</Text>
-            </View>
+            <AppHeader />
 
             <FlatList
                 data={usuarios}
@@ -317,6 +295,6 @@ export default function ManagerUsers() {
                 refreshing={atualizando}
                 onRefresh={atualizar}
             />
-        </SafeAreaView>
+        </View>
     );
 }
