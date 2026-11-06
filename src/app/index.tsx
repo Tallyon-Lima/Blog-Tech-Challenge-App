@@ -1,12 +1,3 @@
-import { StyleSheet } from 'react-native';
+import Login from "./screens/Login/Login";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  title: {
-    textAlign: 'center',
-  },
-});
+export default Login;
