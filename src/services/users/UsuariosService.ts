@@ -34,3 +34,7 @@ export function excluirUsuario(id: number) {
         method: "DELETE",
     });
 }
+
+export function buscarUsuarioPorId(id: number): Promise<UsuarioApi> {
+    return api(`/usuarios/${id}`, { method: "GET" });
+}

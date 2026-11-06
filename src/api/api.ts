@@ -2,6 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
+let aoNaoAutorizado: (() => void) | null = null;
+
+export function definirAoNaoAutorizado(callback: (() => void) | null) {
+    aoNaoAutorizado = callback;
+}
+
 export async function api(
     endpoint: string,
     options?: RequestInit
@@ -24,6 +30,10 @@ export async function api(
         data = rawText ? JSON.parse(rawText) : {};
     } catch {
         data = { message: rawText };
+    }
+
+    if (response.status === 401 && token) {
+        aoNaoAutorizado?.();
     }
 
     if (!response.ok) {
