@@ -1,5 +1,5 @@
 
-import UsuarioModal, { NovoUsuario } from "@/app/components/UsuarioModal/UsuarioModal";
+import UsuarioModal, { NovoUsuario } from "@/components/UsuarioModal/UsuarioModal";
 import {
     COR_PAPEL_PADRAO,
     CORES_PAPEL,
@@ -246,7 +246,7 @@ export default function ManagerUsers() {
                 </TouchableOpacity>
 
                 <Image
-                    source={require("../../../../assets/images/logo.png")}
+                    source={require("../../../assets/images/logo.png")}
                     style={styles.logo}
                     resizeMode="contain"
                 />

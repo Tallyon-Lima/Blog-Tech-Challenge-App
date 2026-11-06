@@ -1,7 +1,7 @@
 import {
     login,
     type LoginRequest
-} from "../../../services/auth/authService";
+} from "@/services/auth/authService";
 
 export class ValidationError extends Error {
     constructor(message: string) {

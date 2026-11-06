@@ -1,3 +1,3 @@
-import Login from "./screens/Login/Login";
+import Login from "@/screens/Login/Login";
 
 export default Login;

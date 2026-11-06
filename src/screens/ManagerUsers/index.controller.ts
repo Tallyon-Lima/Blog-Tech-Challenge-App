@@ -5,7 +5,7 @@ import {
     criarUsuario,
     excluirUsuario,
     listarUsuarios,
-} from "../../../services/users/UsuariosService";
+} from "@/services/users/UsuariosService";
 import { ValidationError } from "../Login/Login.controller";
 
 // Valida os dados do formulário e converte para o formato que a API espera

@@ -55,7 +55,7 @@ export default function Login() {
     <View style={styles.content}>
         <View style={styles.header}>
             <Image 
-                source={require('../../../../assets/images/fundo-login-mobile.png')}
+                source={require('../../../assets/images/fundo-login-mobile.png')}
                 style={styles.imagemHeader}
                 resizeMode="cover"
             />
@@ -63,7 +63,7 @@ export default function Login() {
             <View style={styles.overlay} />
         
             <Image 
-                source={require('../../../../assets/images/logo.png')}
+                source={require('../../../assets/images/logo.png')}
                 style={styles.iconeHeader}
                 resizeMode="cover"
             />
