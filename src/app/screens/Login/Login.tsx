@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
@@ -15,6 +16,7 @@ export default function Login() {
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleLogin = async () => {
         try {
@@ -26,30 +28,28 @@ export default function Login() {
 
             await AsyncStorage.setItem("usuario",JSON.stringify(response.user));           
             await AsyncStorage.setItem("token", response.token);
-            await AsyncStorage.setItem("perfil", response.user.perfil_id);
+            await AsyncStorage.setItem("perfil", String(response.user.perfil_id));
       
-            setTimeout(() => {
-                ToastAndroid.show(
-                    "Login efetuado com sucesso!",
-                    ToastAndroid.SHORT
-                );
+            ToastAndroid.show("Login efetuado com sucesso!", ToastAndroid.SHORT);
+
+            router.replace({
+                pathname: "/screens/ManagerUsers",
+                params: { userName: response.user.nome },
             });
 
         } catch (error) {
             if (error instanceof Error) {
-                ToastAndroid.show(
-                    error.message,
-                    ToastAndroid.SHORT
-                );
+                ToastAndroid.show(error.message, ToastAndroid.SHORT);
             } else {
                 ToastAndroid.show(
                     "Infelizmente ocorreu um erro na conexão com a API. Tente novamente mais tarde.",
                     ToastAndroid.SHORT
                 );
             }
+        } finally {
             setLoading(false);
         }
-    }
+    };
 
   return (
     <View style={styles.content}>
