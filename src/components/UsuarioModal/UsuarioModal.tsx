@@ -58,7 +58,6 @@ export default function UsuarioModal({ visible, onClose, onSubmit, usuario }: Pr
     const [salvando, setSalvando] = useState(false);
 
     useEffect(() => {
-        // Controla a animação de entrada e saída do Modal
         if (visible) {
             setNome(usuario?.nome ?? "");
             setEmail(usuario?.email ?? "");

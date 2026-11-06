@@ -1,6 +1,5 @@
 import type { Papel } from "@/constants/Papeis";
 
-// Formato usado pela tela
 export interface Usuario {
     id: number;
     nome: string;
@@ -9,7 +8,6 @@ export interface Usuario {
     papel: Papel;
 }
 
-// Dados do formulário (modal de criar/editar)
 export interface NovoUsuario {
     nome: string;
     email: string;

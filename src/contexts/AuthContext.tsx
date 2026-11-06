@@ -32,7 +32,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-// Lê o campo "exp" (em segundos) do payload do JWT, sem validar assinatura.
 function obterExpiracaoMs(token: string): number | null {
     try {
         const payload = token.split(".")[1];
@@ -98,7 +97,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         mostrarMensagem("Sua sessão expirou. Faça login novamente.");
     }, [sair]);
 
-    // Encerra a sessão automaticamente quando o token expira (30 min no backend).
     const agendarExpiracao = useCallback((novoToken: string) => {
         limparTemporizador();
 
@@ -129,7 +127,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         agendarExpiracao(novoToken);
     }, [agendarExpiracao]);
 
-    // Restaura a sessão salva ao abrir o app
     useEffect(() => {
         let ativo = true;
 
@@ -160,7 +157,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
     }, [agendarExpiracao]);
 
-    // A API respondeu 401 com um token enviado: a sessão não vale mais
     useEffect(() => {
         definirAoNaoAutorizado(sessaoExpirada);
         return () => definirAoNaoAutorizado(null);

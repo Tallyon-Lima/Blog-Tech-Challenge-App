@@ -19,7 +19,6 @@ export function atualizarComentario(id: number, data: ComentarioEdicaoRequest) {
     });
 }
 
-// O backend exige o id do solicitante no corpo do DELETE
 export function excluirComentario(id: number, usuarioSolicitante: number) {
     return api(`/comentarios/${id}`, {
         method: "DELETE",

@@ -2,7 +2,6 @@ import { Cores } from "@/constants/colors";
 import type { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-// Converte **negrito** e *itálico* em trechos de texto estilizados
 function renderTrechos(texto: string): ReactNode[] {
     const partes: ReactNode[] = [];
     const regex = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
@@ -33,8 +32,6 @@ function renderTrechos(texto: string): ReactNode[] {
     return partes.length > 0 ? partes : [texto];
 }
 
-// Renderiza o conteúdo do post com o mesmo markdown simples do web:
-// títulos (#, ##, ###), listas (* ou -), separadores (--- ou ***), negrito e itálico.
 export default function ConteudoFormatado({ conteudo }: { conteudo: string }) {
     const elementos: ReactNode[] = [];
     let lista: string[] = [];

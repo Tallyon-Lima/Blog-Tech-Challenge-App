@@ -30,7 +30,6 @@ export default function Home() {
     const idRequisicao = useRef(0);
     const chaveCarregada = useRef<string | null>(null);
 
-    // Espera o usuário parar de digitar antes de buscar
     useEffect(() => {
         const timer = setTimeout(() => {
             if (busca === buscaAplicada) return;
@@ -52,7 +51,6 @@ export default function Home() {
                 pesquisa: buscaAplicada,
             });
 
-            // Ignora respostas de buscas antigas
             if (id !== idRequisicao.current) return;
 
             setPosts(atual => (pagina === 1 ? resultado.posts : [...atual, ...resultado.posts]));
@@ -72,8 +70,6 @@ export default function Home() {
         }
     }, [buscaAplicada]);
 
-    // Carrega na primeira vez, quando a busca muda e quando algum post foi alterado em outra tela.
-    // Voltar de um post sem alterações não recarrega, para manter a posição da rolagem.
     useFocusEffect(
         useCallback(() => {
             const chave = `${versaoDosPosts()}|${buscaAplicada}`;

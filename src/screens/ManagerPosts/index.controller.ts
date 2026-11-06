@@ -22,7 +22,6 @@ function converterPost(p: PostListaApi): Post {
     };
 }
 
-// Valida os dados do formulário e devolve apenas o que o backend espera
 function validarDados(valores: PostFormValues) {
     const titulo = valores.titulo.trim();
     const conteudo = valores.conteudo.trim();
@@ -51,7 +50,6 @@ function exigirUsuario(usuario: UsuarioLogado | null): UsuarioLogado {
     return usuario;
 }
 
-// Mesma regra do web: admin edita/exclui qualquer post; professor só os próprios.
 export function podeModificarPost(usuario: UsuarioLogado | null, post: Post) {
     if (!usuario) return false;
     if (usuario.perfilId === PerfilUsuario.ADMIN) return true;
@@ -74,12 +72,10 @@ export async function listarPostsController(params: {
 
     return {
         posts: lista.map(converterPost),
-        // O backend não devolve o total: página cheia indica que pode haver mais
         temMais: lista.length >= params.itensPagina,
     };
 }
 
-// Carrega os dados atuais do post para preencher o formulário de edição
 export async function carregarPostController(id: number): Promise<PostFormValues> {
     const post = await buscarPostPorId(id);
 
@@ -109,8 +105,6 @@ export async function atualizarPostController(
 
     const dados = validarDados(valores);
 
-    // Mantém o autor original: o PUT do backend regrava o campo "autor",
-    // então editar não pode transferir o post para quem está editando.
     const original = await buscarPostPorId(id);
 
     if (!original?.id) {

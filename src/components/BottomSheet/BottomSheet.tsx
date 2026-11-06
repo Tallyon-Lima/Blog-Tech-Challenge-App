@@ -20,11 +20,9 @@ interface Props {
 
 const ALTURA_TELA = Dimensions.get("window").height;
 
-// Painel que sobe da parte de baixo da tela (mesma animação do modal de usuários)
 export default function BottomSheet({ visible, onClose, children }: Props) {
     const insets = useSafeAreaInsets();
 
-    // Mantém o Modal montado até o fim da animação de saída
     const [montado, setMontado] = useState(false);
     const [translateY] = useState(() => new Animated.Value(ALTURA_TELA));
     const [opacidade] = useState(() => new Animated.Value(0));

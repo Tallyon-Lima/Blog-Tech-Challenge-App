@@ -1,4 +1,3 @@
-// Mesma lista de disciplinas do formulário de posts do web
 export const DISCIPLINAS = [
     "Matemática", "Português", "Literatura", "Redação", "Inglês",
     "Espanhol", "História", "Geografia", "Filosofia", "Sociologia",

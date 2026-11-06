@@ -62,7 +62,6 @@ export default function ManagerPosts() {
     const idRequisicao = useRef(0);
     const chaveCarregada = useRef<string | null>(null);
 
-    // Espera o usuário parar de digitar antes de buscar
     useEffect(() => {
         const timer = setTimeout(() => {
             if (busca === buscaAplicada) return;
@@ -84,7 +83,6 @@ export default function ManagerPosts() {
                 pesquisa: buscaAplicada,
             });
 
-            // Ignora respostas de buscas antigas
             if (id !== idRequisicao.current) return;
 
             setPosts(atual => (pagina === 1 ? resultado.posts : [...atual, ...resultado.posts]));
@@ -104,8 +102,6 @@ export default function ManagerPosts() {
         }
     }, [buscaAplicada]);
 
-    // Carrega na primeira vez, quando a busca muda e quando algum post foi alterado em outra tela
-    // (por exemplo, editado ou excluído no detalhe).
     useFocusEffect(
         useCallback(() => {
             const chave = `${versaoDosPosts()}|${buscaAplicada}`;

@@ -5,7 +5,6 @@ import type { DrawerNavigationProp } from "expo-router/drawer";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-// Cabeçalho das telas logadas: botão que abre o menu lateral + logo (igual ao MobileHeader do web)
 export default function AppHeader() {
     const insets = useSafeAreaInsets();
     const navigation = useNavigation<DrawerNavigationProp<Record<string, undefined>>>();

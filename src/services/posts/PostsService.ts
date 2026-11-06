@@ -11,7 +11,6 @@ export function listarPosts(params: {
         itensPagina: String(params.itensPagina),
     });
 
-    // Com termo de busca usa o endpoint de pesquisa; sem termo, a listagem normal
     if (params.pesquisa) {
         query.set("pesquisa", params.pesquisa);
         return api(`/posts/search?${query.toString()}`, { method: "GET" });
@@ -38,7 +37,6 @@ export function atualizarPost(id: number, data: PostRequest) {
     });
 }
 
-// O backend exige o id do solicitante no corpo do DELETE
 export function excluirPost(id: number, autor: number) {
     return api(`/posts/${id}`, {
         method: "DELETE",

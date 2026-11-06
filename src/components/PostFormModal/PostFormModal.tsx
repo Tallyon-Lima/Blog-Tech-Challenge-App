@@ -18,7 +18,6 @@ import {
 
 interface Props {
     visible: boolean;
-    // Quando informado, o formulário abre em modo de edição e carrega o post
     postId?: number | null;
     autorNome: string;
     onClose: () => void;
@@ -26,8 +25,6 @@ interface Props {
     onSubmit: (valores: PostFormValues, postId?: number | null) => Promise<void>;
 }
 
-// O BottomSheet só monta o conteúdo enquanto está aberto, então o formulário
-// começa limpo (ou carregando, na edição) toda vez que é aberto.
 export default function PostFormModal({ visible, ...formulario }: Props) {
     return (
         <BottomSheet visible={visible} onClose={formulario.onClose}>
@@ -46,7 +43,6 @@ function FormularioPost({ postId, autorNome, onClose, carregar, onSubmit }: Omit
     const [carregando, setCarregando] = useState(editando);
     const [salvando, setSalvando] = useState(false);
 
-    // Na edição, carrega os dados atuais do post para preencher o formulário
     useEffect(() => {
         if (!postId) return;
 
@@ -85,7 +81,6 @@ function FormularioPost({ postId, autorNome, onClose, carregar, onSubmit }: Omit
             await onSubmit({ titulo, disciplina, conteudo }, postId);
             onClose();
         } catch {
-            // O erro já é exibido por quem chama onSubmit
         } finally {
             setSalvando(false);
         }

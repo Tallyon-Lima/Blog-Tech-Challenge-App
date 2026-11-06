@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
 
-    // Select de perfil
     select: {
         flexDirection: "row",
         alignItems: "center",
@@ -89,7 +88,6 @@ const styles = StyleSheet.create({
         fontWeight: "600",
     },
 
-    // Botões
     botaoCriar: {
         height: 40,
         borderRadius: 8,

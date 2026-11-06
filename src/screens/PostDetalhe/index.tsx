@@ -69,7 +69,6 @@ export default function PostDetalhe({ postId }: { postId: number }) {
         }
     }, [postId]);
 
-    // Carrega ao abrir e recarrega sempre que a tela volta a ficar visível
     useFocusEffect(
         useCallback(() => {
             carregar();

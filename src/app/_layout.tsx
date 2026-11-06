@@ -4,7 +4,6 @@ import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// Mantém a splash visível até a sessão salva ser lida do armazenamento
 SplashScreen.preventAutoHideAsync();
 
 function Navegacao() {
@@ -16,12 +15,10 @@ function Navegacao() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* Área logada (menu lateral): só para quem está autenticado */}
       <Stack.Protected guard={autenticado}>
         <Stack.Screen name="(app)" />
       </Stack.Protected>
 
-      {/* Login: só para quem ainda não está autenticado */}
       <Stack.Protected guard={!autenticado}>
         <Stack.Screen name="login" />
       </Stack.Protected>

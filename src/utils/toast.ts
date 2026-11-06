@@ -1,6 +1,5 @@
 import { Alert, Platform, ToastAndroid } from "react-native";
 
-// Toast nativo no Android; nos demais sistemas usa um alerta simples.
 export function mostrarMensagem(mensagem: string) {
     if (Platform.OS === "android") {
         ToastAndroid.show(mensagem, ToastAndroid.SHORT);

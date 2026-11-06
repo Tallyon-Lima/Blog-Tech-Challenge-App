@@ -15,7 +15,6 @@ interface ItemMenu {
     visivel: boolean;
 }
 
-// Menu lateral: mesmos itens e regras de perfil do SideBar do web
 export default function MenuLateral({ state, navigation }: DrawerContentComponentProps) {
     const insets = useSafeAreaInsets();
     const router = useRouter();

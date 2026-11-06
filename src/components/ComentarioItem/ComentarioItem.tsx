@@ -25,7 +25,6 @@ export default function ComentarioItem({ comentario, podeModificar, onEditar, on
     const salvar = async () => {
         if (salvando) return;
 
-        // Sem alteração: apenas fecha a edição
         if (texto.trim() === comentario.conteudo) {
             setEditando(false);
             return;
@@ -36,7 +35,6 @@ export default function ComentarioItem({ comentario, podeModificar, onEditar, on
             await onEditar(comentario.id, texto);
             setEditando(false);
         } catch {
-            // O erro já é exibido por quem chama onEditar; mantém a edição aberta
         } finally {
             setSalvando(false);
         }

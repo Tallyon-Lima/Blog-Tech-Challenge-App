@@ -1,4 +1,3 @@
-// Formata uma data ISO como dd/mm/aaaa (mesmo formato do web, sem depender de Intl)
 export function formatarData(dataIso?: string | null) {
     if (!dataIso) return "";
 

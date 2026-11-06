@@ -1,4 +1,3 @@
-// Paleta da identidade visual do web (Blog-Tech-Front: App.css e telas).
 export const Cores = {
     azul: "#224599",
     azulEscuro: "#2b3f6f",

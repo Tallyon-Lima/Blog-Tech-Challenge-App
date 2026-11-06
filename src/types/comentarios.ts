@@ -1,4 +1,3 @@
-// Item de GET /posts/:id/comentarios (autor vem como nome, via JOIN)
 export interface ComentarioApi {
     id: number;
     conteudo: string;
@@ -14,12 +13,10 @@ export interface ComentarioRequest {
     autor_id: number;
 }
 
-// O PUT exige também quem está solicitando a edição
 export interface ComentarioEdicaoRequest extends ComentarioRequest {
     usuario_solicitante: number;
 }
 
-// Formato usado pela tela
 export interface Comentario {
     id: number;
     conteudo: string;

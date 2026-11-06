@@ -28,7 +28,6 @@ export default function Login() {
                 senha
             });
 
-            // Guarda a sessão; o layout raiz troca automaticamente para a área logada
             await registrarSessao(response);
 
             mostrarMensagem("Login efetuado com sucesso!");

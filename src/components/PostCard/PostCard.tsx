@@ -9,7 +9,6 @@ interface Props {
     onPress: () => void;
 }
 
-// Prévia do post na listagem (mesmo layout do PostPreview do web)
 export default function PostCard({ post, onPress }: Props) {
     return (
         <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8} accessibilityRole="button">
