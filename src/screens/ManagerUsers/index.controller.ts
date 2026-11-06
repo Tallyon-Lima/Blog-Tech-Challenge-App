@@ -8,7 +8,6 @@ import {
 } from "@/services/users/UsuariosService";
 import { ValidationError } from "../Login/Login.controller";
 
-// Valida os dados do formulário e converte para o formato que a API espera
 function validarDados(data: NovoUsuario): UsuarioRequest {
     const nome = data.nome.trim();
     const email = data.email.trim();
@@ -62,7 +61,6 @@ export async function listarUsuariosController(params: {
         perfil_id: params.papel ? PERFIL_ID_POR_PAPEL[params.papel] : undefined,
     })) as ListaUsuariosApi | UsuarioApi[];
 
-    // Aceita a API nova ({ data, totalPages }) e a antiga (array)
     const lista = Array.isArray(resposta) ? resposta : resposta.data ?? [];
     const totalPaginas = Array.isArray(resposta) ? 1 : resposta.totalPages ?? 1;
 

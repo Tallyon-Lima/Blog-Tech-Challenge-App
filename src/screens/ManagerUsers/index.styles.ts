@@ -5,8 +5,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f3f4f6",
     },
-
-    // Header
     header: {
         flexDirection: "row",
         alignItems: "center",
@@ -35,8 +33,6 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         marginLeft: 8,
     },
-
-    // Conteúdo
     lista: {
         paddingHorizontal: 14,
         paddingBottom: 30,
@@ -133,8 +129,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "600",
     },
-
-    // Cards
     card: {
         backgroundColor: "#fff",
         borderWidth: 1,
