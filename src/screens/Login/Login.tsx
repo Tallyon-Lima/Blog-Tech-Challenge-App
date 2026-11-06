@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
+import { useAuth } from "@/contexts/AuthContext";
+import { mostrarErro, mostrarMensagem } from "@/utils/toast";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { loginController } from './Login.controller';
 
 export interface LoginRequest {
@@ -16,37 +16,27 @@ export default function Login() {
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
+    const { registrarSessao } = useAuth();
 
     const handleLogin = async () => {
+        if (loading) return;
+
         try {
             setLoading(true);
             const response = await loginController({
-                email, 
+                email,
                 senha
             });
 
-            await AsyncStorage.setItem("usuario",JSON.stringify(response.user));           
-            await AsyncStorage.setItem("token", response.token);
-            await AsyncStorage.setItem("perfil", String(response.user.perfil_id));
-      
-            ToastAndroid.show("Login efetuado com sucesso!", ToastAndroid.SHORT);
+            // Guarda a sessão; o layout raiz troca automaticamente para a área logada
+            await registrarSessao(response);
 
-            router.replace({
-                pathname: "/screens/ManagerUsers",
-                params: { userName: response.user.nome },
-            });
-
+            mostrarMensagem("Login efetuado com sucesso!");
         } catch (error) {
-            if (error instanceof Error) {
-                ToastAndroid.show(error.message, ToastAndroid.SHORT);
-            } else {
-                ToastAndroid.show(
-                    "Infelizmente ocorreu um erro na conexão com a API. Tente novamente mais tarde.",
-                    ToastAndroid.SHORT
-                );
-            }
-        } finally {
+            mostrarErro(
+                error,
+                "Infelizmente ocorreu um erro na conexão com a API. Tente novamente mais tarde."
+            );
             setLoading(false);
         }
     };
@@ -77,7 +67,10 @@ export default function Login() {
           onChangeText={(inputText)=>setEmail(inputText)}
           value={email}
           placeholder="nome@escola.edu.br"
-          
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          returnKeyType="next"
         />
 
         <Text style={styles.label}>Senha</Text>
@@ -88,6 +81,10 @@ export default function Login() {
                 value={senha}
                 placeholder="Insira sua senha"
                 secureTextEntry={!mostrarSenha}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="go"
+                onSubmitEditing={handleLogin}
             />
             <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)}>
                 <Ionicons name={mostrarSenha ? 'eye-off' : 'eye'} size={24} color="#555"/>
