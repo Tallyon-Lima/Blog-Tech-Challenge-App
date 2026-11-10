@@ -20,8 +20,8 @@ Aplicativo mobile do **Blog Tech**, desenvolvido em **React Native com Expo** pa
 
 Regras de autorização (iguais às do web):
 
-- **Aluno** (perfil 1): apenas visualiza posts.
-- **Professor** (perfil 2): cria posts e edita/exclui **os próprios** posts.
+- **Aluno** (perfil 1): apenas visualiza posts e adicionar comentários.
+- **Professor** (perfil 2): cria posts e edita/exclui **os próprios** posts, além, de editar comentários dos alunos.
 - **Admin** (perfil 3): gerencia todos os posts e todos os usuários.
 - Telas restritas não aparecem no menu e, se abertas por link direto, o usuário é devolvido à Home.
 - A sessão expira junto com o token (30 minutos): o app faz logout automático e avisa o usuário.
