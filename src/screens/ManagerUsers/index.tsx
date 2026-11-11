@@ -8,6 +8,7 @@ import {
     type FiltroPapel,
 } from "@/constants/Papeis";
 import type { Usuario } from "@/types/usuarios";
+import { juntarSemRepetir } from "@/utils/listas";
 import { mostrarErro } from "@/utils/toast";
 import { Ionicons } from "@expo/vector-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -47,6 +48,7 @@ export default function ManagerUsers() {
 
     const paginaAtual = useRef(1);
     const idRequisicao = useRef(0);
+    const buscandoMais = useRef(false);
 
     useEffect(() => {
         const timer = setTimeout(() => setBuscaAplicada(busca), 400);
@@ -69,7 +71,7 @@ export default function ManagerUsers() {
             setUsuarios(atual =>
                 pagina === 1
                     ? resultado.usuarios ?? []
-                    : [...atual, ...(resultado.usuarios ?? [])]
+                    : juntarSemRepetir(atual, resultado.usuarios ?? [])
             );
 
             paginaAtual.current = pagina;
@@ -81,6 +83,7 @@ export default function ManagerUsers() {
             }
         } finally {
             if (id === idRequisicao.current) {
+                buscandoMais.current = false;
                 setCarregando(false);
                 setCarregandoMais(false);
                 setAtualizando(false);
@@ -94,8 +97,9 @@ export default function ManagerUsers() {
     }, [buscarPagina]);
 
     const carregarMais = () => {
-        if (carregando || carregandoMais || atualizando || !temMais) return;
+        if (buscandoMais.current || carregando || carregandoMais || atualizando || !temMais) return;
 
+        buscandoMais.current = true;
         setCarregandoMais(true);
         buscarPagina(paginaAtual.current + 1);
     };
