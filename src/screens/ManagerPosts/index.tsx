@@ -4,6 +4,7 @@ import { Cores } from "@/constants/colors";
 import { useAuth } from "@/contexts/AuthContext";
 import type { Post, PostFormValues } from "@/types/posts";
 import { confirmarExclusao } from "@/utils/confirmar";
+import { juntarSemRepetir } from "@/utils/listas";
 import { marcarPostsAlterados, versaoDosPosts } from "@/utils/postsVersao";
 import { mostrarErro, mostrarMensagem } from "@/utils/toast";
 import { Ionicons } from "@expo/vector-icons";
@@ -60,6 +61,7 @@ export default function ManagerPosts() {
 
     const paginaAtual = useRef(1);
     const idRequisicao = useRef(0);
+    const buscandoMais = useRef(false);
     const chaveCarregada = useRef<string | null>(null);
 
     useEffect(() => {
@@ -85,7 +87,7 @@ export default function ManagerPosts() {
 
             if (id !== idRequisicao.current) return;
 
-            setPosts(atual => (pagina === 1 ? resultado.posts : [...atual, ...resultado.posts]));
+            setPosts(atual => (pagina === 1 ? resultado.posts : juntarSemRepetir(atual, resultado.posts)));
 
             paginaAtual.current = pagina;
             setTemMais(resultado.temMais);
@@ -95,6 +97,7 @@ export default function ManagerPosts() {
             }
         } finally {
             if (id === idRequisicao.current) {
+                buscandoMais.current = false;
                 setCarregando(false);
                 setCarregandoMais(false);
                 setAtualizando(false);
@@ -114,8 +117,9 @@ export default function ManagerPosts() {
     );
 
     const carregarMais = () => {
-        if (carregando || carregandoMais || atualizando || !temMais) return;
+        if (buscandoMais.current || carregando || carregandoMais || atualizando || !temMais) return;
 
+        buscandoMais.current = true;
         setCarregandoMais(true);
         buscarPagina(paginaAtual.current + 1);
     };

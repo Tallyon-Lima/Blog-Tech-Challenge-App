@@ -2,6 +2,7 @@ import AppHeader from "@/components/AppHeader/AppHeader";
 import PostCard from "@/components/PostCard/PostCard";
 import { Cores } from "@/constants/colors";
 import type { Post } from "@/types/posts";
+import { juntarSemRepetir } from "@/utils/listas";
 import { versaoDosPosts } from "@/utils/postsVersao";
 import { mostrarErro } from "@/utils/toast";
 import { Ionicons } from "@expo/vector-icons";
@@ -28,6 +29,7 @@ export default function Home() {
 
     const paginaAtual = useRef(1);
     const idRequisicao = useRef(0);
+    const buscandoMais = useRef(false);
     const chaveCarregada = useRef<string | null>(null);
 
     useEffect(() => {
@@ -53,7 +55,7 @@ export default function Home() {
 
             if (id !== idRequisicao.current) return;
 
-            setPosts(atual => (pagina === 1 ? resultado.posts : [...atual, ...resultado.posts]));
+            setPosts(atual => (pagina === 1 ? resultado.posts : juntarSemRepetir(atual, resultado.posts)));
 
             paginaAtual.current = pagina;
             setTemMais(resultado.temMais);
@@ -63,6 +65,7 @@ export default function Home() {
             }
         } finally {
             if (id === idRequisicao.current) {
+                buscandoMais.current = false;
                 setCarregando(false);
                 setCarregandoMais(false);
                 setAtualizando(false);
@@ -82,8 +85,9 @@ export default function Home() {
     );
 
     const carregarMais = () => {
-        if (carregando || carregandoMais || atualizando || !temMais) return;
+        if (buscandoMais.current || carregando || carregandoMais || atualizando || !temMais) return;
 
+        buscandoMais.current = true;
         setCarregandoMais(true);
         buscarPagina(paginaAtual.current + 1);
     };
